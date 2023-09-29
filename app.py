@@ -15,6 +15,12 @@ def on_publish(client,userdata,result):             #create function for callbac
     print("el dato ha sido publicado \n")
     pass
 
+def on_message(client, userdata, message):
+    global message_received
+    time.sleep(2)
+    message_received=str(message.payload.decode("utf-8"))
+    st.write(message_received)
+
 broker="157.230.214.127"
 port=1883
 client1= paho.Client("GIT-HUB")
