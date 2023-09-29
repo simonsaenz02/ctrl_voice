@@ -6,23 +6,31 @@ from streamlit_bokeh_events import streamlit_bokeh_events
 from PIL import Image
 import time
 import glob
-
-
-
+import paho.mqtt.client as paho
+import json
 from gtts import gTTS
 from googletrans import Translator
 
+def on_publish(client,userdata,result):             #create function for callback
+    print("el dato ha sido publicado \n")
+    pass
+
+broker="157.230.214.127"
+port=1883
+client1= paho.Client("GIT-HUB")
+client1.on_message = on_message
+
+
 
 st.title("Interfaces Multimodales")
-st.subheader("TRADUCTOR")
-
+st.subheader("CONTROL POR VOZ")
 
 #image = Image.open('traductor.jpg')
 
 #st.image(image)
 
 
-st.write("Toca el Botón y habla lo que quires traducir")
+st.write("Toca el Botón y habla ")
 
 stt_button = Button(label=" Inicio ", width=200)
 
@@ -56,6 +64,12 @@ result = streamlit_bokeh_events(
 if result:
     if "GET_TEXT" in result:
         st.write(result.get("GET_TEXT"))
+        client1.on_publish = on_publish                            
+        client1.connect(broker,port)  
+        message =json.dumps({"Act1":result.get("GET_TEXT")})
+        ret= client1.publish("voice_ctrl", message)
+
+    
     try:
         os.mkdir("temp")
     except:
