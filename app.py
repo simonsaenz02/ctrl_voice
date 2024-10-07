@@ -74,10 +74,9 @@ if result:
         st.write(result.get("GET_TEXT"))
         client1.on_publish = on_publish                            
         client1.connect(broker,port)  
-        # message =json.dumps({"Act1":result.get("GET_TEXT").strip()})
-        # ret= client1.publish("voice_ctrl", message)
-        message =json.dumps({"accion":result.get("GET_TEXT").strip()})
-        client1.publish("remote", message)
+        message =json.dumps({"Act1":result.get("GET_TEXT").strip()})
+        ret= client1.publish("voice_ctrl", message)
+
     
     try:
         os.mkdir("temp")
