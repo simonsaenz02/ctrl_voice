@@ -21,9 +21,9 @@ def on_message(client, userdata, message):
     message_received=str(message.payload.decode("utf-8"))
     st.write(message_received)
 
-broker="broker.mqttdashboard.com"
+broker="157.230.214.127"
 port=1883
-client1= paho.Client("GIT-HUB")
+client1= paho.Client("GIT-HUBC")
 client1.on_message = on_message
 
 
@@ -75,7 +75,7 @@ if result:
         client1.on_publish = on_publish                            
         client1.connect(broker,port)  
         message =json.dumps({"Act1":result.get("GET_TEXT").strip()})
-        ret= client1.publish("voice_ctrl", message)
+        ret= client1.publish("voice/cosplay", message)
 
     
     try:
